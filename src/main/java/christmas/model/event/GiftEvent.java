@@ -1,6 +1,7 @@
 package christmas.model.event;
 
 import christmas.model.User.Client;
+import christmas.model.menu.MenuItem;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class GiftEvent extends BaseEvent{
     }
     public static String getGiftMenu(Client client) {
         if (client.getTotalAmountBeforeDiscount() >= 120000) {
-            return "샴페인";
+            return MenuItem.BEVERAGE_CHAMPAGNE.getItemName();
         }
         return "없음";
     }

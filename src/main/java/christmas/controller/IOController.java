@@ -2,7 +2,6 @@ package christmas.controller;
 
 import christmas.model.event.EventType;
 import christmas.model.order.MenuOrders;
-import christmas.model.order.OrderValidate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.Map;
@@ -86,7 +85,7 @@ public class IOController {
         Map.Entry<EventType, Integer> entry = benefit.entrySet().iterator().next();
         EventType benefitType = entry.getKey();
         Integer benefitAmount = entry.getValue();
-        outputView.showBenfitByType(benefitType,benefitAmount);
+        outputView.showBenefitByType(benefitType,benefitAmount);
     }
 
     public void showNoBenefit() {

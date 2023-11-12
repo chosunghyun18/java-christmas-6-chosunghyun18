@@ -90,7 +90,7 @@ public class OutputView {
         showDelimeterLineInPlanner();
     }
 
-    public void showBenfitByType(EventType benefitType, Integer benefitAmount) {
+    public void showBenefitByType(EventType benefitType, Integer benefitAmount) {
         if (benefitType.equals(EventType.DdayEvent)) {
             showDdayDiscount(benefitAmount);
             return;

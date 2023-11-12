@@ -2,7 +2,7 @@ package christmas.model.menu;
 
 public enum MenuItem {
 
-    APPETIZER_YANGSONGEE_SOUP("애피타이저", "양송이수프", 6000),
+    APPETIZER_BUTTON_MUSHROOM_SOUP("애피타이저", "양송이수프", 6000),
     APPETIZER_TAPAS("애피타이저", "타파스", 5500),
     APPETIZER_CAESAR_SALAD("애피타이저", "시저샐러드", 8000),
 
