@@ -5,4 +5,7 @@ public class GiftEvent {
         return givenMoney >= 120000;
     }
 
+    public Integer getEventBenefitAmount() {
+        return 25000;
+    }
 }

@@ -53,33 +53,8 @@ public class PlannerController {
 
     public void showEventItemsResult() {
         ioController.showEventItemsHeaderMessage();
-        if (dDayEvent.canGetEvent(visitDay)) {
-            getNoEvent = false;
-            totalDiscountAmount = dDayEvent.getEventBenefit(visitDay);
-            ioController.showDdayDiscount(totalDiscountAmount);
-        }
-        if (weekEvent.canGetEvent(visitDay,menuOrders)) {
-            getNoEvent = false;
-            Integer benefit = weekEvent.getEventBenefit(menuOrders);
-            ioController.showWeekDiscount(benefit);
-            totalDiscountAmount += benefit;
-        }
-        if (weekendEvent.canGetEvent(visitDay,menuOrders)) {
-            getNoEvent = false;
-            Integer benefit = weekendEvent.getEventBenefit(menuOrders);
-            ioController.showWeekendDiscount(benefit);
-            totalDiscountAmount += benefit;
-        }
-        if (specialEvent.canGetEvent(visitDay)) {
-            getNoEvent = false;
-            ioController.showSpecialDiscount();
-            totalDiscountAmount += 1000;
-        }
-        if (giftEvent.canGetEvent(beforeDiscount)) {
-            getNoEvent = false;
-            ioController.showGetEventMenuDisCount();
-            totalEventAmount = 25000 + totalDiscountAmount;
-        }
+        checkDiscountEvent();
+        checkGiftEvent();
         if (getNoEvent) {
             ioController.showNoResultMessage();
         }
@@ -100,5 +75,36 @@ public class PlannerController {
 
     public void showBedge() {
         ioController.showEventBedge(totalEventAmount);
+    }
+    private void checkGiftEvent(){
+        if (giftEvent.canGetEvent(beforeDiscount)) {
+            getNoEvent = false;
+            ioController.showGetEventMenuDisCount();
+            totalEventAmount = giftEvent.getEventBenefitAmount() + totalDiscountAmount;
+        }
+    }
+    private void checkDiscountEvent() {
+        if (dDayEvent.canGetEvent(visitDay)) {
+            getNoEvent = false;
+            totalDiscountAmount = dDayEvent.getEventBenefit(visitDay);
+            ioController.showDdayDiscount(totalDiscountAmount);
+        }
+        if (weekEvent.canGetEvent(visitDay,menuOrders)) {
+            getNoEvent = false;
+            Integer benefit = weekEvent.getEventBenefit(menuOrders);
+            ioController.showWeekDiscount(benefit);
+            totalDiscountAmount += benefit;
+        }
+        if (weekendEvent.canGetEvent(visitDay,menuOrders)) {
+            getNoEvent = false;
+            Integer benefit = weekendEvent.getEventBenefit(menuOrders);
+            ioController.showWeekendDiscount(benefit);
+            totalDiscountAmount += benefit;
+        }
+        if (specialEvent.canGetEvent(visitDay)) {
+            getNoEvent = false;
+            ioController.showSpecialDiscount();
+            totalDiscountAmount += specialEvent.getEventBenefit();
+        }
     }
 }

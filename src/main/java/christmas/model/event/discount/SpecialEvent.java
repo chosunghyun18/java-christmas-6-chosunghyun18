@@ -12,4 +12,8 @@ public class SpecialEvent {
     public Boolean canGetEvent(Integer day) {
         return days.contains(day);
     }
+
+    public Integer getEventBenefit() {
+        return 1000;
+    }
 }
