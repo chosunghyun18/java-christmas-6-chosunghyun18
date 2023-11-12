@@ -1,6 +1,5 @@
 package christmas.controller;
 
-import christmas.model.InputValidate;
 import christmas.model.MenuOrders;
 import christmas.view.InputView;
 import christmas.view.OutputView;

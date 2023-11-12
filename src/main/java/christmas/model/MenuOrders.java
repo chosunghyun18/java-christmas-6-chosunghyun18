@@ -12,6 +12,7 @@ public class MenuOrders {
     private final Map<MenuItem, Integer> orders;
 
     public MenuOrders(Map<MenuItem, Integer> orders) {
+        OrderValidate.checkOrders(orders);
         this.orders = new TreeMap<>(orders);
     }
 
