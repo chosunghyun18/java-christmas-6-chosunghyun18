@@ -35,4 +35,12 @@ public class IOController {
             return readMenuAndAmount();
         }
     }
+
+    public void showEventDayIntroMessage(Integer visitDay) {
+        outputView.showEventDayIntroMessage(visitDay);
+    }
+
+    public void showOrderCompleteMessage(MenuOrders orders) {
+        outputView.showOrderCompleteMessage(orders);
+    }
 }

@@ -1,7 +1,5 @@
 package christmas.model;
 
-import christmas.controller.MenuOrders;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,16 +9,16 @@ public class InputValidate {
         try {
             Integer.parseInt(givenDate);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException("유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         }
     }
 
     public static void dateRangeCheck(Integer givenDate) {
         if (givenDate > 31) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException("유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         }
         if (givenDate < 0) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException("유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         }
     }
 
@@ -34,7 +32,7 @@ public class InputValidate {
         List<String> result = List.of(given.split(","));
         for (String item : result) {
             if (!item.contains("-")) {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
         }
         return result;
@@ -44,7 +42,7 @@ public class InputValidate {
         for (String item : orderString) {
             String menuCandiate = item.substring(0, item.lastIndexOf("-"));
             if (MenuItem.isNotMenu(menuCandiate)) {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
         }
     }

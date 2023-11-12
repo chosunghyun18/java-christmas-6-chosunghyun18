@@ -4,7 +4,6 @@ import christmas.model.DdayEvent;
 import christmas.model.SpecialEvent;
 import christmas.model.Week;
 import christmas.model.Weekend;
-import christmas.view.OutputView;
 import java.util.List;
 
 public class PlannerController {
@@ -14,6 +13,7 @@ public class PlannerController {
     private final SpecialEvent specialEvent;
     private final DdayEvent dDayEvent;
     private Integer visitDay ;
+    private MenuOrders orders;
 
     public PlannerController() {
         this.ioController = new IOController();
@@ -25,6 +25,9 @@ public class PlannerController {
 
     public void startPlanner() {
         this.visitDay = ioController.getVisitDay();
-        MenuOrders orders = ioController.readMenuAndAmount();
+        this.orders = ioController.readMenuAndAmount();
+        ioController.showEventDayIntroMessage(visitDay);
+        ioController.showOrderCompleteMessage(orders);
     }
+
 }
