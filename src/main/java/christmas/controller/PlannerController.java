@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.model.User.Client;
 import christmas.model.event.BaseEvent;
+import christmas.model.event.EventConfig;
 import christmas.model.event.GiftEvent;
 
 import java.util.List;
@@ -10,8 +11,8 @@ public class PlannerController {
     private final IOController ioController;
     private final Client client;
     private final List<BaseEvent> events;
-    public PlannerController(List<BaseEvent> events) {
-        this.events = events;
+    public PlannerController() {
+        this.events = EventConfig.configEvent();
         this.ioController = new IOController();
         this.client = new Client(ioController.getVisitDay(),ioController.readMenuAndAmount());
     }
@@ -57,5 +58,13 @@ public class PlannerController {
         if(client.isNotJoinEvent()){
             ioController.showNoBenefit();
         }
+    }
+    public void showOrderResult() {
+        showBeforeDisCount();
+        showGiftEventMenu();
+        showEventItemsResult();
+        showTotalDiscount();
+        showAfterDiscount();
+        showBadge();
     }
 }
