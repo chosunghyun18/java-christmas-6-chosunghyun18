@@ -1,11 +1,11 @@
 package christmas.controller;
 
-import christmas.model.event.DdayEvent;
+import christmas.model.event.discount.DdayEvent;
 import christmas.model.event.GiftEvent;
-import christmas.model.event.WeekEvent;
-import christmas.model.event.WeekendEvent;
+import christmas.model.event.discount.WeekEvent;
+import christmas.model.event.discount.WeekendEvent;
 import christmas.model.order.MenuOrders;
-import christmas.model.event.SpecialEvent;
+import christmas.model.event.discount.SpecialEvent;
 import java.util.List;
 
 public class PlannerController {

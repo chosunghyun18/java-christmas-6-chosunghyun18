@@ -1,4 +1,4 @@
-package christmas.model.event;
+package christmas.model.event.discount;
 
 public class DdayEvent {
     private final Integer day = 25;

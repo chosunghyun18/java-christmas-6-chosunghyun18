@@ -1,4 +1,4 @@
-package christmas.model.event;
+package christmas.model.event.discount;
 
 import christmas.model.order.MenuOrders;
 import java.util.List;
