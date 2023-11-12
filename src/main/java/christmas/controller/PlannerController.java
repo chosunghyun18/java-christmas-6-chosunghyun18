@@ -13,7 +13,8 @@ public class PlannerController {
     private final SpecialEvent specialEvent;
     private final DdayEvent dDayEvent;
     private Integer visitDay ;
-    private MenuOrders orders;
+    private MenuOrders menuOrders;
+    private Integer beforeDiscount;
 
     public PlannerController() {
         this.ioController = new IOController();
@@ -25,9 +26,12 @@ public class PlannerController {
 
     public void startPlanner() {
         this.visitDay = ioController.getVisitDay();
-        this.orders = ioController.readMenuAndAmount();
+        this.menuOrders = ioController.readMenuAndAmount();
         ioController.showEventDayIntroMessage(visitDay);
-        ioController.showOrderCompleteMessage(orders);
+        ioController.showOrderCompleteMessage(menuOrders);
     }
-
+    public void showBeforeDisCount(){
+        this.beforeDiscount = menuOrders.getTotalAmountBeforeDiscount();
+        ioController.showBeforeDisCountMessage(this.beforeDiscount);
+    }
 }

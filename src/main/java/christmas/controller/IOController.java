@@ -43,4 +43,8 @@ public class IOController {
     public void showOrderCompleteMessage(MenuOrders orders) {
         outputView.showOrderCompleteMessage(orders);
     }
+
+    public void showBeforeDisCountMessage(Integer beforeDiscount) {
+        outputView.showBeforeDisCountMessage(beforeDiscount);
+    }
 }

@@ -23,4 +23,10 @@ public class MenuOrders {
                 })
                 .toList();
     }
+
+    public Integer getTotalAmountBeforeDiscount() {
+        return orders.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().getItemPrice() * entry.getValue())
+                .sum();
+    }
 }

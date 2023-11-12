@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.controller.MenuOrders;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -27,4 +28,10 @@ public class OutputView {
         );
     }
 
+    public void showBeforeDisCountMessage(Integer beforeDiscount) {
+        System.out.println("<할인 전 총주문 금액>");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        String formattedNumber = decimalFormat.format(beforeDiscount);
+        System.out.println(formattedNumber);
+    }
 }
