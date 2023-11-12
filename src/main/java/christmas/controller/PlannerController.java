@@ -9,7 +9,7 @@ import java.util.List;
 public class PlannerController {
     private final IOController ioController;
     private final Week week;
-    private final Weekend weekend; // 주말
+    private final Weekend weekend;
     private final SpecialEvent specialEvent;
     private final DdayEvent dDayEvent;
     private Integer visitDay ;
@@ -33,5 +33,11 @@ public class PlannerController {
     public void showBeforeDisCount(){
         this.beforeDiscount = menuOrders.getTotalAmountBeforeDiscount();
         ioController.showBeforeDisCountMessage(this.beforeDiscount);
+    }
+
+    public void showEventMenu() {
+        Boolean showEvent = true;
+        if(beforeDiscount < 120000)  showEvent = false;
+        ioController.showExtraItemEventMessage(showEvent);
     }
 }

@@ -7,5 +7,6 @@ public class Application {
         PlannerController plannerController = new PlannerController();
         plannerController.startPlanner();
         plannerController.showBeforeDisCount();
+        plannerController.showEventMenu();
     }
 }

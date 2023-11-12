@@ -47,4 +47,8 @@ public class IOController {
     public void showBeforeDisCountMessage(Integer beforeDiscount) {
         outputView.showBeforeDisCountMessage(beforeDiscount);
     }
+
+    public void showExtraItemEventMessage(boolean showExtra) {
+        outputView.showExtraItemEventMessage(showExtra);
+    }
 }

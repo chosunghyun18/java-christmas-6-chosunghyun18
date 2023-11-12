@@ -11,11 +11,11 @@ public class OutputView {
     }
 
     public void printError(String message) {
-        System.out.println("[ERROR] "+message);
+        System.out.println("[ERROR] " + message);
     }
 
     public void showEventDayIntroMessage(Integer visitDay) {
-        System.out.println("12월 "+visitDay+"일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        System.out.println("12월 " + visitDay + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
         System.out.println("");
 
     }
@@ -26,6 +26,7 @@ public class OutputView {
         orders.forEach(order -> order.forEach((itemName, quantity) ->
                 System.out.println(itemName + " " + quantity + "개"))
         );
+        showDelimeterLineInPlanner();
     }
 
     public void showBeforeDisCountMessage(Integer beforeDiscount) {
@@ -33,5 +34,25 @@ public class OutputView {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String formattedNumber = decimalFormat.format(beforeDiscount);
         System.out.println(formattedNumber);
+        showDelimeterLineInPlanner();
+    }
+
+    public void showExtraItemEventMessage(boolean showExtra) {
+        System.out.println("<증정 메뉴>");
+        if (showExtra) {
+            System.out.println("샴페인 1개");
+            showDelimeterLineInPlanner();
+            return;
+        }
+        showNoEventResult();
+        showDelimeterLineInPlanner();
+    }
+
+    private void showDelimeterLineInPlanner() {
+        System.out.println("");
+    }
+
+    private void showNoEventResult() {
+        System.out.println("없음");
     }
 }
