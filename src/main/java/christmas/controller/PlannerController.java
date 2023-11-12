@@ -36,8 +36,34 @@ public class PlannerController {
     }
 
     public void showEventMenu() {
-        Boolean showEvent = true;
-        if(beforeDiscount < 120000)  showEvent = false;
-        ioController.showExtraItemEventMessage(showEvent);
+        ioController.showExtraItemEventMessage(canGetEventMenu());
+    }
+    private Boolean canGetEventMenu() {
+        return  beforeDiscount >= 120000 ;
+    }
+    public void showEventItemsResult() {
+        System.out.println("<혜택 내역>");
+        Boolean getNoEvent = true;
+        if(1<= visitDay && visitDay <=25) {
+            getNoEvent = false;
+            ioController.showDdayDiscount(visitDay);
+        }
+        if(week.canGetEvent(visitDay) && menuOrders.canGetWeekDiscount()) {
+            getNoEvent = false;
+            ioController.showWeekDiscount(menuOrders);
+        }
+        if(weekend.canGetEvent(visitDay)&& menuOrders.canGetWeekendDiscount()) {
+            getNoEvent = false;
+            ioController.showWeekendDiscount(menuOrders);
+        }
+        if(specialEvent.canGetEvent(visitDay)) {
+            getNoEvent = false;
+            ioController.showSpecialDiscount();
+        }
+        if(canGetEventMenu()){
+            getNoEvent = false;
+            ioController.showGetEventMenuDisCount();
+        }
+        if(getNoEvent) ioController.showNoResultMessage();
     }
 }

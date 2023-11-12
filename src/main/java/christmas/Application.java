@@ -8,5 +8,6 @@ public class Application {
         plannerController.startPlanner();
         plannerController.showBeforeDisCount();
         plannerController.showEventMenu();
+        plannerController.showEventItemsResult();
     }
 }

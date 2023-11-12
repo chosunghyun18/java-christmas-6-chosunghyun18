@@ -31,8 +31,7 @@ public class OutputView {
 
     public void showBeforeDisCountMessage(Integer beforeDiscount) {
         System.out.println("<할인 전 총주문 금액>");
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String formattedNumber = decimalFormat.format(beforeDiscount);
+        String formattedNumber = getForMatedNumber(beforeDiscount);
         System.out.println(formattedNumber);
         showDelimeterLineInPlanner();
     }
@@ -54,5 +53,43 @@ public class OutputView {
 
     private void showNoEventResult() {
         System.out.println("없음");
+    }
+
+    public void showEventItemsHeaderMessage() {
+        System.out.println("<혜택 내역>");
+    }
+
+    public void showNoResultMessage() {
+        System.out.println("없음");
+    }
+
+    public void showDdayDiscount(Integer discountAmount) {
+        System.out.println("크리스마스 디데이 할인: -"+getForMatedNumber(discountAmount)+"원");
+    }
+    private String getForMatedNumber(String given){
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(given);
+    }
+    private String getForMatedNumber(Integer given){
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        return decimalFormat.format(given);
+    }
+
+    public void showWeekDiscount(Integer weekDiscountAmount) {
+        System.out.println("평일 할인: -"+getForMatedNumber(weekDiscountAmount)+"원");
+    }
+
+    public void showWeekendDiscount(Integer weekendDiscountAmount) {
+        System.out.println("주말 할인: -"+getForMatedNumber( weekendDiscountAmount)+"원");
+    }
+
+    public void showSpecialDiscount() {
+        Integer specialDiscountAmount = 1000;
+        System.out.println("특별 할인: -"+getForMatedNumber(specialDiscountAmount)+"원");
+    }
+
+    public void showGetEventMenuDisCount() {
+        Integer specialGiftPrice = 25000;
+        System.out.println("증정 이벤트: -"+getForMatedNumber(specialGiftPrice)+"원");
     }
 }

@@ -51,4 +51,31 @@ public class IOController {
     public void showExtraItemEventMessage(boolean showExtra) {
         outputView.showExtraItemEventMessage(showExtra);
     }
+    public void  showEventItemsHeaderMessage(){
+        outputView.showEventItemsHeaderMessage();
+    }
+    public void showNoResultMessage() {
+        outputView.showNoResultMessage();
+    }
+
+    public void showDdayDiscount(Integer visitDay) {
+        Integer discountAmount = 1000 + (visitDay-1)*100;
+        outputView.showDdayDiscount(discountAmount);
+    }
+
+    public void showWeekDiscount(MenuOrders menuOrders) {
+        outputView.showWeekDiscount(menuOrders.getWeekDiscountAmount());
+    }
+
+    public void showWeekendDiscount(MenuOrders menuOrders) {
+        outputView.showWeekendDiscount(menuOrders.getWeekendDiscountAmount());
+    }
+
+    public void showSpecialDiscount() {
+        outputView.showSpecialDiscount();
+    }
+
+    public void showGetEventMenuDisCount() {
+        outputView.showGetEventMenuDisCount();
+    }
 }
