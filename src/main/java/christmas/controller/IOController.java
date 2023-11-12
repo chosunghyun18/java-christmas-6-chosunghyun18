@@ -85,8 +85,8 @@ public class IOController {
         outputView.showAfterDiscount(money);
     }
 
-    public void showEventBedge(Integer eventAmount) {
-        outputView.showBedge(eventAmount);
+    public void showEventBadge(String badge) {
+        outputView.showEventBadge(badge);
     }
 
     public void showLine() {

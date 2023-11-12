@@ -11,6 +11,6 @@ public class Application {
         plannerController.showEventItemsResult();
         plannerController.showTotalDiscount();
         plannerController.showAfterDiscount();
-        plannerController.showBedge();
+        plannerController.showBadge();
     }
 }

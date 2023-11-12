@@ -1,110 +1,69 @@
 package christmas.controller;
 
-import christmas.model.event.discount.DdayEvent;
-import christmas.model.event.GiftEvent;
-import christmas.model.event.discount.WeekEvent;
-import christmas.model.event.discount.WeekendEvent;
-import christmas.model.order.MenuOrders;
-import christmas.model.event.discount.SpecialEvent;
-import java.util.List;
+import christmas.model.User.Client;
+import christmas.model.event.ChristmasPromotion;
 
 public class PlannerController {
     private final IOController ioController;
-    private final WeekEvent weekEvent;
-    private final WeekendEvent weekendEvent;
-    private final SpecialEvent specialEvent;
-    private final DdayEvent dDayEvent;
-    private final GiftEvent giftEvent;
-    private Integer visitDay;
-    private MenuOrders menuOrders;
-    private Integer beforeDiscount;
-    private Boolean getNoEvent ;
-    private Integer totalDiscountAmount ;
-    private Integer totalEventAmount ;
-
+    private final ChristmasPromotion christmasPromotion;
+    private final Client client;
     public PlannerController() {
         this.ioController = new IOController();
-        this.dDayEvent = new DdayEvent();
-        this.giftEvent = new GiftEvent();
-        this.specialEvent = new SpecialEvent(List.of(3, 10, 17, 24, 25, 31));
-        this.weekendEvent = new WeekendEvent(List.of(1, 2, 8, 9, 15, 16, 22, 23, 29, 30));
-        this.weekEvent = new WeekEvent(List.of(3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31));
-        this.beforeDiscount = 0 ;
-        this.getNoEvent = true;
-        this.totalDiscountAmount = 0 ;
-        this.totalEventAmount = 0;
+        this.christmasPromotion = new ChristmasPromotion();
+        this.client = new Client(ioController.getVisitDay(),ioController.readMenuAndAmount());
     }
 
     public void startPlanner() {
-        this.visitDay = ioController.getVisitDay();
-        this.menuOrders = ioController.readMenuAndAmount();
-        ioController.showEventDayIntroMessage(visitDay);
-        ioController.showOrderCompleteMessage(menuOrders);
+        ioController.showEventDayIntroMessage(client.getVisitDay());
+        ioController.showOrderCompleteMessage(client.getMenuOrders());
     }
 
     public void showBeforeDisCount() {
-        this.beforeDiscount = menuOrders.getTotalAmountBeforeDiscount();
-        ioController.showBeforeDisCountMessage(this.beforeDiscount);
+        ioController.showBeforeDisCountMessage(client.getTotalAmountBeforeDiscount());
     }
 
     public void showEventMenu() {
-        ioController.showExtraItemEventMessage(giftEvent.canGetEvent(beforeDiscount));
+        ioController.showExtraItemEventMessage(christmasPromotion.canGetGiftEvent(client));
     }
 
     public void showEventItemsResult() {
         ioController.showEventItemsHeaderMessage();
         checkDiscountEvent();
         checkGiftEvent();
-        if (getNoEvent) {
+        if (client.getNoEvent()) {
             ioController.showNoResultMessage();
         }
         ioController.showLine();
     }
 
     public void showTotalDiscount() {
-        if (getNoEvent) {
-            ioController.showTotalDiscountMessage(totalEventAmount);
-            return;
-        }
-        ioController.showTotalDiscountMessage(totalEventAmount);
+        ioController.showTotalDiscountMessage(client.getTotalDiscountAmount());
     }
 
     public void showAfterDiscount() {
-        ioController.showAfterDiscount(beforeDiscount-totalDiscountAmount);
+        ioController.showAfterDiscount(client.getAfterDiscount());
     }
 
-    public void showBedge() {
-        ioController.showEventBedge(totalEventAmount);
+    public void showBadge() {
+        ioController.showEventBadge(client.getBadge());
     }
     private void checkGiftEvent(){
-        if (giftEvent.canGetEvent(beforeDiscount)) {
-            getNoEvent = false;
+        if (christmasPromotion.canGetGiftEvent(client)) {
             ioController.showGetEventMenuDisCount();
-            totalEventAmount = giftEvent.getEventBenefitAmount() + totalDiscountAmount;
         }
     }
     private void checkDiscountEvent() {
-        if (dDayEvent.canGetEvent(visitDay)) {
-            getNoEvent = false;
-            totalDiscountAmount = dDayEvent.getEventBenefit(visitDay);
-            ioController.showDdayDiscount(totalDiscountAmount);
+        if (christmasPromotion.canGetDDayEvent(client)) {
+            ioController.showDdayDiscount(christmasPromotion.getDDayEventBenefit(client));
         }
-        if (weekEvent.canGetEvent(visitDay,menuOrders)) {
-            getNoEvent = false;
-            Integer benefit = weekEvent.getEventBenefit(menuOrders);
-            ioController.showWeekDiscount(benefit);
-            totalDiscountAmount += benefit;
+        if (christmasPromotion.canGetWeekEvent(client)) {
+            ioController.showWeekDiscount(christmasPromotion.getWeekEventBenefit(client));
         }
-        if (weekendEvent.canGetEvent(visitDay,menuOrders)) {
-            getNoEvent = false;
-            Integer benefit = weekendEvent.getEventBenefit(menuOrders);
-            ioController.showWeekendDiscount(benefit);
-            totalDiscountAmount += benefit;
+        if (christmasPromotion.canGetWeekendEvent(client)) {
+            ioController.showWeekendDiscount(christmasPromotion.getWeekendEventBenefit(client));
         }
-        if (specialEvent.canGetEvent(visitDay)) {
-            getNoEvent = false;
+        if (christmasPromotion.canGetSpecialEvent(client)) {
             ioController.showSpecialDiscount();
-            totalDiscountAmount += specialEvent.getEventBenefit();
         }
     }
 }

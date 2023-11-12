@@ -107,21 +107,9 @@ public class OutputView {
         System.out.println(getForMatedNumber(money)+"원");
         showDelimeterLineInPlanner();
     }
-
-    public void showBedge(Integer eventAmount) {
+    public void showEventBadge(String badge) {
         System.out.println("<12월 이벤트 배지>");
-        if (eventAmount >= 20000) {
-            System.out.println("산타");
-            return;
-        }
-        if (eventAmount >= 10000) {
-            System.out.println("트리");
-            return;
-        }
-        if (eventAmount >= 5000) {
-            System.out.println("별");
-            return;
-        }
+        System.out.println(badge);
         showNoResultMessage();
     }
 }
