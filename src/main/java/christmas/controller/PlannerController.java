@@ -1,15 +1,18 @@
 package christmas.controller;
 
 import christmas.model.User.Client;
-import christmas.model.event.ChristmasPromotion;
+import christmas.model.event.BaseEvent;
+import christmas.model.event.GiftEvent;
+
+import java.util.List;
 
 public class PlannerController {
     private final IOController ioController;
-    private final ChristmasPromotion christmasPromotion;
     private final Client client;
-    public PlannerController() {
+    private final List<BaseEvent> events;
+    public PlannerController(List<BaseEvent> events) {
+        this.events = events;
         this.ioController = new IOController();
-        this.christmasPromotion = new ChristmasPromotion();
         this.client = new Client(ioController.getVisitDay(),ioController.readMenuAndAmount());
     }
 
@@ -22,17 +25,13 @@ public class PlannerController {
         ioController.showBeforeDisCountMessage(client.getTotalAmountBeforeDiscount());
     }
 
-    public void showEventMenu() {
-        ioController.showExtraItemEventMessage(christmasPromotion.canGetGiftEvent(client));
+    public void showGiftEventMenu() {
+        ioController.showExtraItemEventMessage(GiftEvent.getGiftMenu(client));
     }
 
     public void showEventItemsResult() {
         ioController.showEventItemsHeaderMessage();
-        checkDiscountEvent();
-        checkGiftEvent();
-        if (client.getNoEvent()) {
-            ioController.showNoResultMessage();
-        }
+        checkEvent();
         ioController.showLine();
     }
 
@@ -45,25 +44,18 @@ public class PlannerController {
     }
 
     public void showBadge() {
+        client.applyBadge();
         ioController.showEventBadge(client.getBadge());
     }
-    private void checkGiftEvent(){
-        if (christmasPromotion.canGetGiftEvent(client)) {
-            ioController.showGetEventMenuDisCount();
-        }
-    }
-    private void checkDiscountEvent() {
-        if (christmasPromotion.canGetDDayEvent(client)) {
-            ioController.showDdayDiscount(christmasPromotion.getDDayEventBenefit(client));
-        }
-        if (christmasPromotion.canGetWeekEvent(client)) {
-            ioController.showWeekDiscount(christmasPromotion.getWeekEventBenefit(client));
-        }
-        if (christmasPromotion.canGetWeekendEvent(client)) {
-            ioController.showWeekendDiscount(christmasPromotion.getWeekendEventBenefit(client));
-        }
-        if (christmasPromotion.canGetSpecialEvent(client)) {
-            ioController.showSpecialDiscount();
+    private void checkEvent() {
+        events.forEach(event ->{
+            if(event.canGetEvent(client)){
+                ioController.showBenefit(event.getEventBenefit(client));
+                event.updateClientBenefit(client);
+            }
+        });
+        if(client.isNotJoinEvent()){
+            ioController.showNoBenefit();
         }
     }
 }

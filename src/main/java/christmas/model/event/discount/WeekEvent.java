@@ -1,20 +1,34 @@
 package christmas.model.event.discount;
 
-import christmas.model.order.MenuOrders;
+import christmas.model.User.Client;
+import christmas.model.event.BaseEvent;
+import christmas.model.event.EventType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class WeekEvent {
+public class WeekEvent extends BaseEvent {
     private final List<Integer> days;
 
     public WeekEvent(List<Integer> days) {
         this.days = days;
     }
-
-    public Boolean canGetEvent(Integer day,MenuOrders menuOrders) {
-        return days.contains(day) & menuOrders.isOrderHaveMenu("디저트") ;
+    @Override
+    public Boolean canGetEvent(Client client) {
+        return days.contains(client.getVisitDay()) & client.getMenuOrders().isOrderHaveMenu("디저트") ;
     }
-
-    public Integer getEventBenefit(MenuOrders menuOrders) {
-        return  2023* menuOrders.getValueSumByMenu("디저트");
+    @Override
+    public Map<EventType, Integer> getEventBenefit(Client client) {
+        int amount = 2023* client.getMenuOrders().getValueSumByMenu("디저트");
+        Map<EventType, Integer> benefitMap = new HashMap<>();
+        benefitMap.put(EventType.WeekEvent, amount);
+        return benefitMap;
+    }
+    @Override
+    public void updateClientBenefit(Client client) {
+        client.joinEvent();
+        int amount = 2023* client.getMenuOrders().getValueSumByMenu("디저트");
+        client.addBenefitToTotalDiscountAmount(amount);
+        client.addBenefitToTotalEventAmount(amount);
     }
 }

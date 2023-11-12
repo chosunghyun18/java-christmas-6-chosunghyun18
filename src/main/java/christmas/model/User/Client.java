@@ -9,6 +9,7 @@ public class Client {
     private Boolean noEvent;
     private Integer totalDiscountAmount;
     private Integer totalEventAmount;
+    private String badge;
 
     public Client(Integer visitDay, MenuOrders menuOrders) {
         this.visitDay = visitDay;
@@ -17,6 +18,7 @@ public class Client {
         this.noEvent = true;
         this.totalDiscountAmount = 0;
         this.totalEventAmount = 0;
+        this.badge = "없음";
     }
 
     public Integer getVisitDay() {
@@ -31,44 +33,40 @@ public class Client {
         return totalAmountBeforeDiscount;
     }
 
-    public void setTotalEventAmount(Integer totalEventAmount) {
-        this.totalEventAmount = totalEventAmount+totalDiscountAmount;
-    }
-
-    public Boolean getNoEvent() {
-        return noEvent;
-    }
-
     public Integer getTotalDiscountAmount() {
         return totalDiscountAmount;
     }
-
-    public Integer getTotalEventAmount() {
-        return totalEventAmount;
-    }
-
     public Integer getAfterDiscount() {
         return totalAmountBeforeDiscount-totalDiscountAmount;
     }
-
-    public void setNoEvent(Boolean noEvent) {
-        this.noEvent = noEvent;
-    }
-
     public String getBadge() {
-        if (totalEventAmount >= 20000) {
-            return "산타";
+        return badge;
+    }
+    public void applyBadge() {
+        if (this.totalEventAmount >= 20000) {
+            badge = "산타";
+            return;
         }
-        if (totalEventAmount >= 10000) {
-            return "트리";
+        if (this.totalEventAmount >= 10000) {
+            badge ="트리";
+            return;
         }
-        if (totalEventAmount >= 5000) {
-            return "별";
+        if (this.totalEventAmount >= 5000) {
+            badge ="별";
         }
-        return "없음";
+    }
+    public void joinEvent() {
+        this.noEvent = false;
+    }
+    public void addBenefitToTotalDiscountAmount(Integer eventBenefit) {
+        totalDiscountAmount += eventBenefit;
     }
 
-    public void addBenefitToTotalDiscountAmount(Integer eventBenefit) {
-        totalDiscountAmount+=eventBenefit;
+    public void addBenefitToTotalEventAmount(int amount) {
+        this.totalEventAmount += amount;
+    }
+
+    public boolean isNotJoinEvent() {
+        return this.noEvent;
     }
 }

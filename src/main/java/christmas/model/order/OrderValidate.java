@@ -9,7 +9,7 @@ public class OrderValidate {
         chekcTotalAmount(orders);
         checkOnlyDrink(orders);
     }
-    private static Boolean canGetEvent(Map<MenuItem, Integer> orders) {
+    public static Boolean canGetEvent(Map<MenuItem, Integer> orders) {
         Integer totalPrice = orders.entrySet().stream()
                 .mapToInt(entry -> entry.getKey().getItemPrice() * entry.getValue())
                 .sum();

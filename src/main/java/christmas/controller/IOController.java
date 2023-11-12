@@ -1,8 +1,10 @@
 package christmas.controller;
 
+import christmas.model.event.EventType;
 import christmas.model.order.MenuOrders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.Map;
 
 public class IOController {
     private final InputView inputView;
@@ -48,34 +50,11 @@ public class IOController {
         outputView.showBeforeDisCountMessage(beforeDiscount);
     }
 
-    public void showExtraItemEventMessage(boolean showExtra) {
+    public void showExtraItemEventMessage(String showExtra) {
         outputView.showExtraItemEventMessage(showExtra);
     }
     public void  showEventItemsHeaderMessage(){
         outputView.showEventItemsHeaderMessage();
-    }
-    public void showNoResultMessage() {
-        outputView.showNoResultMessage();
-    }
-
-    public void showDdayDiscount(Integer discountAmount) {
-        outputView.showDdayDiscount(discountAmount);
-    }
-
-    public void showWeekDiscount(Integer benefit) {
-        outputView.showWeekDiscount(benefit);
-    }
-
-    public void showWeekendDiscount(Integer benefit) {
-        outputView.showWeekendDiscount(benefit);
-    }
-
-    public void showSpecialDiscount() {
-        outputView.showSpecialDiscount();
-    }
-
-    public void showGetEventMenuDisCount() {
-        outputView.showGetEventMenuDisCount();
     }
     public void showTotalDiscountMessage(Integer totalAmount) {
         outputView.showTotalDiscountMessage(totalAmount);
@@ -91,5 +70,16 @@ public class IOController {
 
     public void showLine() {
         outputView.showDelimeterLineInPlanner();
+    }
+
+    public void showBenefit(Map<EventType,Integer> benefit) {
+        Map.Entry<EventType, Integer> entry = benefit.entrySet().iterator().next();
+        EventType benefitType = entry.getKey();
+        Integer benefitAmount = entry.getValue();
+        outputView.showBenfitByType(benefitType,benefitAmount);
+    }
+
+    public void showNoBenefit() {
+        outputView.showNoResultMessage();
     }
 }
