@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.controller.MenuOrders;
+import christmas.model.MenuOrders;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
@@ -31,8 +31,7 @@ public class OutputView {
 
     public void showBeforeDisCountMessage(Integer beforeDiscount) {
         System.out.println("<할인 전 총주문 금액>");
-        String formattedNumber = getForMatedNumber(beforeDiscount);
-        System.out.println(formattedNumber);
+        System.out.println(getForMatedNumber(beforeDiscount) +"원");
         showDelimeterLineInPlanner();
     }
 
@@ -47,7 +46,7 @@ public class OutputView {
         showDelimeterLineInPlanner();
     }
 
-    private void showDelimeterLineInPlanner() {
+    public void showDelimeterLineInPlanner() {
         System.out.println("");
     }
 
@@ -100,5 +99,29 @@ public class OutputView {
             return;
         }
         System.out.println("-"+getForMatedNumber(totalAmount)+"원");
+        showDelimeterLineInPlanner();
+    }
+
+    public void showAfterDiscount(Integer money) {
+        System.out.println("<할인 후 예상 결제 금액>");
+        System.out.println(getForMatedNumber(money)+"원");
+        showDelimeterLineInPlanner();
+    }
+
+    public void showBedge(Integer eventAmount) {
+        System.out.println("<12월 이벤트 배지>");
+        if (eventAmount >= 20000) {
+            System.out.println("산타");
+            return;
+        }
+        if (eventAmount >= 10000) {
+            System.out.println("트리");
+            return;
+        }
+        if (eventAmount >= 5000) {
+            System.out.println("별");
+            return;
+        }
+        showNoResultMessage();
     }
 }

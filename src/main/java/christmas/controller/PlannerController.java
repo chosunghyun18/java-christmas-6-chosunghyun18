@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.model.DdayEvent;
+import christmas.model.MenuOrders;
 import christmas.model.SpecialEvent;
 import christmas.model.Week;
 import christmas.model.Weekend;
@@ -17,6 +18,7 @@ public class PlannerController {
     private Integer beforeDiscount;
     private Boolean getNoEvent ;
     private Integer totalDiscountAmount ;
+    private Integer totalEventAmount ;
 
     public PlannerController() {
         this.ioController = new IOController();
@@ -27,6 +29,7 @@ public class PlannerController {
         this.beforeDiscount = 0 ;
         this.getNoEvent = true;
         this.totalDiscountAmount = 0 ;
+        this.totalEventAmount = 0;
     }
 
     public void startPlanner() {
@@ -50,7 +53,7 @@ public class PlannerController {
     }
 
     public void showEventItemsResult() {
-        System.out.println("<혜택 내역>");
+        ioController.showEventItemsHeaderMessage();
         if (1 <= visitDay && visitDay <= 25) {
             getNoEvent = false;
             totalDiscountAmount = 1000 + (visitDay-1)*100;
@@ -74,29 +77,27 @@ public class PlannerController {
         if (canGetEventMenu()) {
             getNoEvent = false;
             ioController.showGetEventMenuDisCount();
-            totalDiscountAmount+=25000;
+            totalEventAmount = 25000 + totalDiscountAmount;
         }
         if (getNoEvent) {
             ioController.showNoResultMessage();
         }
+        ioController.showLine();
     }
 
     public void showTotalDiscount() {
         if (getNoEvent) {
-            ioController.showTotalDiscountMessage(totalDiscountAmount);
+            ioController.showTotalDiscountMessage(totalEventAmount);
             return;
         }
-        totalDiscountAmount = calculateTotalDiscount();
-        ioController.showTotalDiscountMessage(totalDiscountAmount);
-    }
-
-    private Integer calculateTotalDiscount() {
-        return totalDiscountAmount;
+        ioController.showTotalDiscountMessage(totalEventAmount);
     }
 
     public void showAfterDiscount() {
+        ioController.showAfterDiscount(beforeDiscount-totalDiscountAmount);
     }
 
     public void showBedge() {
+        ioController.showEventBedge(totalEventAmount);
     }
 }

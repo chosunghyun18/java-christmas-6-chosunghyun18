@@ -1,17 +1,18 @@
-package christmas.controller;
+package christmas.model;
 
 import christmas.model.MenuItem;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class MenuOrders {
     private final Map<MenuItem, Integer> orders;
 
     public MenuOrders(Map<MenuItem, Integer> orders) {
-        this.orders = orders;
+        this.orders = new TreeMap<>(orders);
     }
 
     public List<Map<String, Integer>> getOrderForMessage() {

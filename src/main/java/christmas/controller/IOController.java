@@ -1,6 +1,7 @@
 package christmas.controller;
 
 import christmas.model.InputValidate;
+import christmas.model.MenuOrders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -79,5 +80,17 @@ public class IOController {
     }
     public void showTotalDiscountMessage(Integer totalAmount) {
         outputView.showTotalDiscountMessage(totalAmount);
+    }
+
+    public void showAfterDiscount(Integer money) {
+        outputView.showAfterDiscount(money);
+    }
+
+    public void showEventBedge(Integer eventAmount) {
+        outputView.showBedge(eventAmount);
+    }
+
+    public void showLine() {
+        outputView.showDelimeterLineInPlanner();
     }
 }
