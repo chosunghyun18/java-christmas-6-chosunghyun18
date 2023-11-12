@@ -10,9 +10,9 @@ public class IOController {
     private final InputView inputView;
     public final OutputView outputView;
 
-    public IOController() {
-        this.inputView = new InputView();
-        this.outputView = new OutputView();
+    public IOController(InputView inputView ,OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public Integer getVisitDay() {

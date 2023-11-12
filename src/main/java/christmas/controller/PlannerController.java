@@ -11,9 +11,10 @@ public class PlannerController {
     private final IOController ioController;
     private final Client client;
     private final List<BaseEvent> events;
-    public PlannerController() {
+
+    public PlannerController(IOController ioController) {
         this.events = EventConfig.configEvent();
-        this.ioController = new IOController();
+        this.ioController = ioController;
         this.client = new Client(ioController.getVisitDay(),ioController.readMenuAndAmount());
     }
 
