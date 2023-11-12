@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.model.MenuOrders;
+import christmas.model.order.MenuOrders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -62,12 +62,12 @@ public class IOController {
         outputView.showDdayDiscount(discountAmount);
     }
 
-    public void showWeekDiscount(MenuOrders menuOrders) {
-        outputView.showWeekDiscount(menuOrders.getWeekDiscountAmount());
+    public void showWeekDiscount(Integer benefit) {
+        outputView.showWeekDiscount(benefit);
     }
 
-    public void showWeekendDiscount(MenuOrders menuOrders) {
-        outputView.showWeekendDiscount(menuOrders.getWeekendDiscountAmount());
+    public void showWeekendDiscount(Integer benefit) {
+        outputView.showWeekendDiscount(benefit);
     }
 
     public void showSpecialDiscount() {

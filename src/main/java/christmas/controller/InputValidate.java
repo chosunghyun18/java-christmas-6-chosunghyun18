@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.model.MenuItem;
+import christmas.model.menu.MenuItem;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

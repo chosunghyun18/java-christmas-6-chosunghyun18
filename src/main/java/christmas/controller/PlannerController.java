@@ -1,18 +1,20 @@
 package christmas.controller;
 
-import christmas.model.DdayEvent;
-import christmas.model.MenuOrders;
-import christmas.model.SpecialEvent;
-import christmas.model.Week;
-import christmas.model.Weekend;
+import christmas.model.event.DdayEvent;
+import christmas.model.event.GiftEvent;
+import christmas.model.event.WeekEvent;
+import christmas.model.event.WeekendEvent;
+import christmas.model.order.MenuOrders;
+import christmas.model.event.SpecialEvent;
 import java.util.List;
 
 public class PlannerController {
     private final IOController ioController;
-    private final Week week;
-    private final Weekend weekend;
+    private final WeekEvent weekEvent;
+    private final WeekendEvent weekendEvent;
     private final SpecialEvent specialEvent;
     private final DdayEvent dDayEvent;
+    private final GiftEvent giftEvent;
     private Integer visitDay;
     private MenuOrders menuOrders;
     private Integer beforeDiscount;
@@ -22,10 +24,11 @@ public class PlannerController {
 
     public PlannerController() {
         this.ioController = new IOController();
-        this.week = new Week(List.of(3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31));
-        this.weekend = new Weekend(List.of(1, 2, 8, 9, 15, 16, 22, 23, 29, 30));
-        this.specialEvent = new SpecialEvent(List.of(3, 10, 17, 24, 25, 31));
         this.dDayEvent = new DdayEvent();
+        this.giftEvent = new GiftEvent();
+        this.specialEvent = new SpecialEvent(List.of(3, 10, 17, 24, 25, 31));
+        this.weekendEvent = new WeekendEvent(List.of(1, 2, 8, 9, 15, 16, 22, 23, 29, 30));
+        this.weekEvent = new WeekEvent(List.of(3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31));
         this.beforeDiscount = 0 ;
         this.getNoEvent = true;
         this.totalDiscountAmount = 0 ;
@@ -45,36 +48,34 @@ public class PlannerController {
     }
 
     public void showEventMenu() {
-        ioController.showExtraItemEventMessage(canGetEventMenu());
-    }
-
-    private Boolean canGetEventMenu() {
-        return beforeDiscount >= 120000;
+        ioController.showExtraItemEventMessage(giftEvent.canGetEvent(beforeDiscount));
     }
 
     public void showEventItemsResult() {
         ioController.showEventItemsHeaderMessage();
-        if (1 <= visitDay && visitDay <= 25) {
+        if (dDayEvent.canGetEvent(visitDay)) {
             getNoEvent = false;
-            totalDiscountAmount = 1000 + (visitDay-1)*100;
+            totalDiscountAmount = dDayEvent.getEventBenefit(visitDay);
             ioController.showDdayDiscount(totalDiscountAmount);
         }
-        if (week.canGetEvent(visitDay) && menuOrders.canGetWeekDiscount()) {
+        if (weekEvent.canGetEvent(visitDay,menuOrders)) {
             getNoEvent = false;
-            ioController.showWeekDiscount(menuOrders);
-            totalDiscountAmount+=menuOrders.getWeekDiscountAmount();
+            Integer benefit = weekEvent.getEventBenefit(menuOrders);
+            ioController.showWeekDiscount(benefit);
+            totalDiscountAmount += benefit;
         }
-        if (weekend.canGetEvent(visitDay) && menuOrders.canGetWeekendDiscount()) {
+        if (weekendEvent.canGetEvent(visitDay,menuOrders)) {
             getNoEvent = false;
-            ioController.showWeekendDiscount(menuOrders);
-            totalDiscountAmount+= menuOrders.getWeekendDiscountAmount();
+            Integer benefit = weekendEvent.getEventBenefit(menuOrders);
+            ioController.showWeekendDiscount(benefit);
+            totalDiscountAmount += benefit;
         }
         if (specialEvent.canGetEvent(visitDay)) {
             getNoEvent = false;
             ioController.showSpecialDiscount();
-            totalDiscountAmount+=1000;
+            totalDiscountAmount += 1000;
         }
-        if (canGetEventMenu()) {
+        if (giftEvent.canGetEvent(beforeDiscount)) {
             getNoEvent = false;
             ioController.showGetEventMenuDisCount();
             totalEventAmount = 25000 + totalDiscountAmount;

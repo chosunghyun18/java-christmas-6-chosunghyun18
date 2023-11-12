@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.model.MenuOrders;
+import christmas.model.order.MenuOrders;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;

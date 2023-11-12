@@ -1,6 +1,6 @@
-package christmas.model;
+package christmas.model.order;
 
-import christmas.model.MenuItem;
+import christmas.model.menu.MenuItem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,28 +32,15 @@ public class MenuOrders {
                 .sum();
     }
 
-    public boolean canGetWeekDiscount() {
+    public boolean isOrderHaveMenu(String menu) {
         return orders.entrySet().stream()
-                .anyMatch(entry -> entry.getKey().getCategory().equals("디저트"));
+                .anyMatch(entry -> entry.getKey().getCategory().equals(menu));
     }
 
-    public boolean canGetWeekendDiscount() {
+    public Integer getValueSumByMenu(String menu) {
         return orders.entrySet().stream()
-                .anyMatch(entry -> entry.getKey().getCategory().equals("메인"));
-    }
-
-    public Integer getWeekDiscountAmount() {
-        return 2023 * orders.entrySet().stream()
-                .filter(entry -> entry.getKey().getCategory().equals("디저트"))
+                .filter(entry -> entry.getKey().getCategory().equals(menu))
                 .mapToInt(Map.Entry::getValue)
                 .sum();
     }
-
-    public Integer getWeekendDiscountAmount() {
-        return 2023 * orders.entrySet().stream()
-                .filter(entry -> entry.getKey().getCategory().equals("메인"))
-                .mapToInt(Map.Entry::getValue)
-                .sum();
-    }
-
 }
