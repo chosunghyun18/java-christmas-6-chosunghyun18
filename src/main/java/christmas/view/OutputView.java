@@ -135,4 +135,8 @@ public class OutputView {
         Integer specialGiftPrice = 25000;
         System.out.println("증정 이벤트: -" + getForMatedNumber(specialGiftPrice) + "원");
     }
+
+    public void showEventDenyMessage() {
+        System.out.println("주문 금액 10,000원 이상부터 이벤트가 적용됩니다.");
+    }
 }

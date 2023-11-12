@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.model.event.EventType;
 import christmas.model.order.MenuOrders;
+import christmas.model.order.OrderValidate;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.Map;
@@ -31,10 +32,19 @@ public class IOController {
     public MenuOrders readMenuAndAmount() {
         String order = inputView.readMenuAndAmount();
         try {
-            return new MenuOrders(InputValidate.orderCheck(order));
+            MenuOrders orders = new MenuOrders(InputValidate.orderCheck(order));
+            showEventApplyMessaged(orders);
+            return orders;
         } catch (IllegalArgumentException e) {
             outputView.printError(e.getMessage());
             return readMenuAndAmount();
+        }
+    }
+
+    private void showEventApplyMessaged(MenuOrders orders) {
+        if(orders.canNotGetEvent()) {
+            outputView.showEventDenyMessage();
+            outputView.showDelimeterLineInPlanner();
         }
     }
 

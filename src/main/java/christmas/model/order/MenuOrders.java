@@ -43,4 +43,10 @@ public class MenuOrders {
                 .mapToInt(Map.Entry::getValue)
                 .sum();
     }
+    public Boolean canNotGetEvent() {
+        int totalPrice = orders.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().getItemPrice() * entry.getValue())
+                .sum();
+        return totalPrice < 10000;
+    }
 }

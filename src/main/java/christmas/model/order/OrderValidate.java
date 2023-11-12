@@ -9,13 +9,6 @@ public class OrderValidate {
         chekcTotalAmount(orders);
         checkOnlyDrink(orders);
     }
-    public static Boolean canGetEvent(Map<MenuItem, Integer> orders) {
-        Integer totalPrice = orders.entrySet().stream()
-                .mapToInt(entry -> entry.getKey().getItemPrice() * entry.getValue())
-                .sum();
-        return totalPrice >= 10000;
-    }
-
     private static void chekcTotalAmount(Map<MenuItem, Integer> orders) {
         Integer totalValue = orders.values().stream()
                 .mapToInt(i -> i)
