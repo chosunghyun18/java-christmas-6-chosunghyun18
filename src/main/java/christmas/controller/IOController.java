@@ -58,8 +58,7 @@ public class IOController {
         outputView.showNoResultMessage();
     }
 
-    public void showDdayDiscount(Integer visitDay) {
-        Integer discountAmount = 1000 + (visitDay-1)*100;
+    public void showDdayDiscount(Integer discountAmount) {
         outputView.showDdayDiscount(discountAmount);
     }
 
@@ -77,5 +76,8 @@ public class IOController {
 
     public void showGetEventMenuDisCount() {
         outputView.showGetEventMenuDisCount();
+    }
+    public void showTotalDiscountMessage(Integer totalAmount) {
+        outputView.showTotalDiscountMessage(totalAmount);
     }
 }

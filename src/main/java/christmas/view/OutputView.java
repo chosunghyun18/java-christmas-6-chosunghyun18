@@ -92,4 +92,13 @@ public class OutputView {
         Integer specialGiftPrice = 25000;
         System.out.println("증정 이벤트: -"+getForMatedNumber(specialGiftPrice)+"원");
     }
+
+    public void showTotalDiscountMessage(Integer totalAmount) {
+        System.out.println("<총혜택 금액>");
+        if (totalAmount.equals(0)) {
+            System.out.println("0원");
+            return;
+        }
+        System.out.println("-"+getForMatedNumber(totalAmount)+"원");
+    }
 }

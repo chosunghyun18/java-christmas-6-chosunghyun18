@@ -9,5 +9,8 @@ public class Application {
         plannerController.showBeforeDisCount();
         plannerController.showEventMenu();
         plannerController.showEventItemsResult();
+        plannerController.showTotalDiscount();
+        plannerController.showAfterDiscount();
+        plannerController.showBedge();
     }
 }

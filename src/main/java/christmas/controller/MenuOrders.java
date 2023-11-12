@@ -41,19 +41,17 @@ public class MenuOrders {
     }
 
     public Integer getWeekDiscountAmount() {
-        long countAmount = orders.entrySet().stream()
+        return 2023 * orders.entrySet().stream()
                 .filter(entry -> entry.getKey().getCategory().equals("디저트"))
-                .count();
-
-        return (int) (2023 * countAmount);
+                .mapToInt(Map.Entry::getValue)
+                .sum();
     }
 
     public Integer getWeekendDiscountAmount() {
-        long countAmount = orders.entrySet().stream()
+        return 2023 * orders.entrySet().stream()
                 .filter(entry -> entry.getKey().getCategory().equals("메인"))
-                .count();
-
-        return (int) (2023 * countAmount);
+                .mapToInt(Map.Entry::getValue)
+                .sum();
     }
 
 }
