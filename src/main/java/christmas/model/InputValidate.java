@@ -56,10 +56,10 @@ public class InputValidate {
             Integer menuAmount = stingToNumberCheck(order[1]);
 
             if (menuAmount < 0) {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
             if (orders.containsKey(menuName)) {
-                throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
             }
             orders.put(menuName, menuAmount);
         }
@@ -71,7 +71,7 @@ public class InputValidate {
         try {
             amount = Integer.parseInt(given);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
         return amount;
     }
