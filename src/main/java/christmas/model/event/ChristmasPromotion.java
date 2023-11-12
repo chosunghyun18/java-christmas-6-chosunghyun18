@@ -25,7 +25,7 @@ public class ChristmasPromotion {
 
     public boolean canGetGiftEvent(Client client) {
         if (giftEvent.canGetEvent(client.getTotalAmountBeforeDiscount())) {
-            client.setTotalEventAmount(giftEvent.getEventBenefitAmount());
+            client.setTotalEventAmount(giftEvent.getEventBenefit());
             return true;
         }
         return false;
@@ -52,7 +52,7 @@ public class ChristmasPromotion {
     }
 
     public boolean canGetWeekendEvent(Client client) {
-        if(weekEvent.canGetEvent(client.getVisitDay(),client.getMenuOrders())){
+        if(weekendEvent.canGetEvent(client.getVisitDay(),client.getMenuOrders())){
             client.addBenefitToTotalDiscountAmount(weekendEvent.getEventBenefit(client.getMenuOrders()));
             return true;
         }
