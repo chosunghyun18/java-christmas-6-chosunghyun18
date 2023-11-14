@@ -1,7 +1,7 @@
-package christmas.model.event;
+package christmas.model.event.config;
 
 public enum EventType {
-    DdayEvent,
+    DDayEvent,
     SpecialEvent,
     WeekendEvent,
     WeekEvent,

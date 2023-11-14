@@ -1,5 +1,6 @@
-package christmas.model.event;
+package christmas.model.event.config;
 
+import christmas.model.event.gift.GiftEvent;
 import christmas.model.event.discount.DdayEvent;
 import christmas.model.event.discount.SpecialEvent;
 import christmas.model.event.discount.WeekEvent;

@@ -1,9 +1,9 @@
 package christmas.controller;
 
 import christmas.model.User.Client;
-import christmas.model.event.BaseEvent;
-import christmas.model.event.EventConfig;
-import christmas.model.event.GiftEvent;
+import christmas.model.event.config.BaseEvent;
+import christmas.model.event.config.EventConfig;
+import christmas.model.event.gift.GiftEvent;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class PlannerController {
 
     public void showBadge() {
         client.applyBadge();
-        ioController.showEventBadge(client.getBadge());
+        ioController.showEventBadge(client.getBadgeContent());
     }
     private void checkEvent() {
         events.forEach(event ->{

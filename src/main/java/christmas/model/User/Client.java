@@ -1,24 +1,37 @@
 package christmas.model.User;
 
+import christmas.model.event.gift.DecemberBadge;
 import christmas.model.order.MenuOrders;
 
 public class Client {
+    private Long id;
     private Integer visitDay;
     private MenuOrders menuOrders;
     private Integer totalAmountBeforeDiscount;
     private Boolean noEvent;
     private Integer totalDiscountAmount;
     private Integer totalEventAmount;
-    private String badge;
+    private DecemberBadge badge;
 
-    public Client(Integer visitDay, MenuOrders menuOrders) {
+    private Client(Long id, Integer visitDay, MenuOrders menuOrders, Integer totalAmountBeforeDiscount, Boolean noEvent,
+                   Integer totalDiscountAmount, Integer totalEventAmount, DecemberBadge badge) {
+        this.id = id;
         this.visitDay = visitDay;
         this.menuOrders = menuOrders;
-        this.totalAmountBeforeDiscount = menuOrders.getTotalAmountBeforeDiscount();
-        this.noEvent = true;
-        this.totalDiscountAmount = 0;
-        this.totalEventAmount = 0;
-        this.badge = "없음";
+        this.totalAmountBeforeDiscount = totalAmountBeforeDiscount;
+        this.noEvent = noEvent;
+        this.totalDiscountAmount = totalDiscountAmount;
+        this.totalEventAmount = totalEventAmount;
+        this.badge = badge;
+    }
+
+    public Client(Integer visitDay, MenuOrders menuOrders) {
+        this(null, visitDay, menuOrders, menuOrders.getTotalAmountBeforeDiscount(), true, 0, 0,DecemberBadge.NONE);
+    }
+
+    public Client(Long id, Client client) {
+        this(id, client.visitDay, client.menuOrders, client.totalAmountBeforeDiscount, client.noEvent,
+                client.totalDiscountAmount, client.totalEventAmount, client.badge);
     }
 
     public Integer getVisitDay() {
@@ -36,28 +49,23 @@ public class Client {
     public Integer getTotalDiscountAmount() {
         return totalDiscountAmount;
     }
+
     public Integer getAfterDiscount() {
-        return totalAmountBeforeDiscount-totalDiscountAmount;
+        return totalAmountBeforeDiscount - totalDiscountAmount;
     }
-    public String getBadge() {
-        return badge;
+
+    public String getBadgeContent() {
+        return badge.getBadgeContent();
     }
+
     public void applyBadge() {
-        if (this.totalEventAmount >= 20000) {
-            badge = "산타";
-            return;
-        }
-        if (this.totalEventAmount >= 10000) {
-            badge ="트리";
-            return;
-        }
-        if (this.totalEventAmount >= 5000) {
-            badge ="별";
-        }
+        this.badge = badge.updateBadge(totalEventAmount);
     }
+
     public void joinEvent() {
         this.noEvent = false;
     }
+
     public void addBenefitToTotalDiscountAmount(Integer eventBenefit) {
         totalDiscountAmount += eventBenefit;
     }

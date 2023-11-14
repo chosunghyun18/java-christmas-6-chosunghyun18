@@ -1,11 +1,13 @@
-package christmas.model.event;
+package christmas.model.event.gift;
 
 import christmas.model.User.Client;
+import christmas.model.event.config.BaseEvent;
+import christmas.model.event.config.EventType;
 import christmas.model.menu.MenuItem;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GiftEvent extends BaseEvent{
+public class GiftEvent extends BaseEvent {
     @Override
     public Boolean canGetEvent(Client client) {
         return client.getTotalAmountBeforeDiscount() >= 120000;

@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.model.event.EventType;
+import christmas.model.event.config.EventType;
 import christmas.model.order.MenuOrders;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -91,7 +91,7 @@ public class OutputView {
     }
 
     public void showBenefitByType(EventType benefitType, Integer benefitAmount) {
-        if (benefitType.equals(EventType.DdayEvent)) {
+        if (benefitType.equals(EventType.DDayEvent)) {
             showDdayDiscount(benefitAmount);
             return;
         }

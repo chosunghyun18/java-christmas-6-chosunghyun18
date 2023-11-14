@@ -1,9 +1,9 @@
 package christmas.model.event.discount;
 
 import christmas.model.User.Client;
-import christmas.model.event.BaseEvent;
+import christmas.model.event.config.BaseEvent;
 
-import christmas.model.event.EventType;
+import christmas.model.event.config.EventType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

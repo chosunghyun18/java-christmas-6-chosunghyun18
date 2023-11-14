@@ -1,6 +1,6 @@
 package christmas.controller;
 
-import christmas.model.event.EventType;
+import christmas.model.event.config.EventType;
 import christmas.model.order.MenuOrders;
 import christmas.view.InputView;
 import christmas.view.OutputView;

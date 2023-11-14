@@ -1,8 +1,8 @@
 package christmas.model.event.discount;
 
 import christmas.model.User.Client;
-import christmas.model.event.BaseEvent;
-import christmas.model.event.EventType;
+import christmas.model.event.config.BaseEvent;
+import christmas.model.event.config.EventType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public class DdayEvent extends BaseEvent {
     public Map<EventType,Integer> getEventBenefit(Client client) {
         int amount = 1000 + (client.getVisitDay() - 1) * 100;
         Map<EventType, Integer> benefitMap = new HashMap<>();
-        benefitMap.put(EventType.DdayEvent, amount);
+        benefitMap.put(EventType.DDayEvent, amount);
         return benefitMap;
     }
     @Override

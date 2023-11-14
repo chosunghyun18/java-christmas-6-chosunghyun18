@@ -1,4 +1,4 @@
-package christmas.model.event;
+package christmas.model.event.config;
 
 import christmas.model.User.Client;
 import java.util.Map;
