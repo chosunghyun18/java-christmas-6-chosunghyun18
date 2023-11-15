@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class WeekendEvent extends BaseEvent {
-    private static final Integer WEEKEND_EVENT_BENEFIT_VALUE = 2023;
+    public static final Integer WEEKEND_EVENT_BENEFIT_VALUE = 2023;
 
     public WeekendEvent(List<Integer> days) {
         this.days = days;

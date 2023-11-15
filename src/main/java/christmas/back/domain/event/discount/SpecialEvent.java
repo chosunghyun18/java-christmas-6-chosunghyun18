@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SpecialEvent extends BaseEvent {
-    private static final Integer SPECIAL_EVENT_BENEFIT_VALUE = 1000;
+    public static final Integer SPECIAL_EVENT_BENEFIT_VALUE = 1000;
     private final List<Integer> days;
 
     public SpecialEvent(List<Integer> days) {

@@ -75,8 +75,7 @@ public class Client {
     }
 
     public Boolean canGetEventByCheckDDay(Integer dDayBaseDay) {
-        boolean re  = visitDay <= dDayBaseDay;
-        return  re;
+        return visitDay <= dDayBaseDay;
     }
 
     public Payment getPayment() {
