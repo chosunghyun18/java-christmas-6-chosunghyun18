@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SpecialEvent extends BaseEvent {
+    private static final Integer SPECIAL_EVENT_BENEFIT_VALUE = 1000;
     private final List<Integer> days;
 
     public SpecialEvent(List<Integer> days) {
@@ -20,16 +21,13 @@ public class SpecialEvent extends BaseEvent {
     }
     @Override
     public Map<EventType,Integer> getEventBenefit(Client client,MenuOrders menuOrders) {
-        int amount = 1000;
         Map<EventType, Integer> benefitMap = new HashMap<>();
-        benefitMap.put(EventType.SpecialEvent, amount);
+        benefitMap.put(EventType.SpecialEvent,SPECIAL_EVENT_BENEFIT_VALUE);
         return benefitMap;
     }
     @Override
     public void updateClientBenefit(Client client,MenuOrders menuOrders) {
         client.joinEvent();
-        int amount = 1000;
-        client.addBenefitToTotalDiscountAmount(amount);
-        client.addBenefitToTotalEventAmount(amount);
+        client. addBenefitToTotalDiscountAndEventBenefit(SPECIAL_EVENT_BENEFIT_VALUE);
     }
 }

@@ -22,7 +22,7 @@ public class ClientService {
     }
 
     public Integer getTotalAmountBeforeDiscount(Long clientId) {
-        return findClientById(clientId).getTotalAmountBeforeDiscount();
+        return findClientById(clientId).getPayment().getTotalPaymentBeforeDiscount();
     }
 
     public String getGiftEventMenu(Long clientId) {
@@ -30,11 +30,11 @@ public class ClientService {
     }
 
     public Integer getTotalDiscountAmount(Long clientId) {
-        return findClientById(clientId).getTotalDiscountAmount();
+        return findClientById(clientId).getPayment().getTotalDiscountMoney();
     }
 
     public Integer getAfterDiscount(Long clientId) {
-        return findClientById(clientId).getAfterDiscount();
+        return findClientById(clientId).getPayment().getAfterDiscount();
     }
 
     public String getBadgeContent(Long clientId) {

@@ -9,27 +9,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GiftEvent extends BaseEvent {
+    private static final Integer GIFT_EVENT_BENEFIT_VALUE = 25000;
+    private static final Integer DECEMBER_GIFT_EVENT_MIN_MONEY = 120000;
     public static String getGiftMenu(Client client) {
-        if (client.getTotalAmountBeforeDiscount() >= 120000) {
+        if (client.checkCanGetEvent(DECEMBER_GIFT_EVENT_MIN_MONEY)) {
             return MenuItem.BEVERAGE_CHAMPAGNE.getItemName();
         }
         return "없음";
     }
     @Override
     public Boolean canGetEvent(Client client, MenuOrders menuOrders) {
-        return client.getTotalAmountBeforeDiscount() >= 120000;
+        return client.checkCanGetEvent(DECEMBER_GIFT_EVENT_MIN_MONEY);
     }
     @Override
     public Map<EventType, Integer> getEventBenefit(Client client,MenuOrders menuOrders) {
-        int amount = 25000;
         Map<EventType, Integer> benefitMap = new HashMap<>();
-        benefitMap.put(EventType.GiftEvent, amount);
+        benefitMap.put(EventType.GiftEvent,GIFT_EVENT_BENEFIT_VALUE);
         return benefitMap;
     }
     @Override
     public void updateClientBenefit(Client client,MenuOrders menuOrders) {
         client.joinEvent();
-        int amount = 25000;
-        client.addBenefitToTotalEventAmount(amount);
+        client.addBenefitToTotalEventAmount(GIFT_EVENT_BENEFIT_VALUE);
     }
 }

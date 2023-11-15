@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class WeekEvent extends BaseEvent {
+    private static final Integer WEEK_EVENT_BENEFIT_VALUE = 2023;
     private final List<Integer> days;
 
     public WeekEvent(List<Integer> days) {
@@ -20,7 +21,7 @@ public class WeekEvent extends BaseEvent {
     }
     @Override
     public Map<EventType, Integer> getEventBenefit(Client client,MenuOrders menuOrders) {
-        int amount = 2023* menuOrders.getValueSumByMenu("디저트");
+        int amount = WEEK_EVENT_BENEFIT_VALUE* menuOrders.getValueSumByMenu("디저트");
         Map<EventType, Integer> benefitMap = new HashMap<>();
         benefitMap.put(EventType.WeekEvent, amount);
         return benefitMap;
@@ -28,8 +29,7 @@ public class WeekEvent extends BaseEvent {
     @Override
     public void updateClientBenefit(Client client,MenuOrders menuOrders) {
         client.joinEvent();
-        int amount = 2023* menuOrders.getValueSumByMenu("디저트");
-        client.addBenefitToTotalDiscountAmount(amount);
-        client.addBenefitToTotalEventAmount(amount);
+        int benefit = WEEK_EVENT_BENEFIT_VALUE* menuOrders.getValueSumByMenu("디저트");
+        client.addBenefitToTotalDiscountAndEventBenefit(benefit);
     }
 }

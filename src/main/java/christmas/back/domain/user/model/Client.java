@@ -9,47 +9,41 @@ public class Client {
     private Boolean noEvent;
     private final Integer visitDay;
     private DecemberBadge badge;
-    private final Integer totalAmountBeforeDiscount;
-    private Integer totalDiscountAmount;
-    private Integer totalEventAmount;
+    private Payment payment;
 
-    private Client(Long id, Long menuOrdersId, Boolean noEvent, Integer visitDay, DecemberBadge badge,
+    public Client(Long id, Long menuOrdersId, Boolean noEvent, Integer visitDay, DecemberBadge badge,
                   Integer totalAmountBeforeDiscount, Integer totalDiscountAmount, Integer totalEventAmount) {
         this.id = id;
         this.menuOrdersId = menuOrdersId;
         this.noEvent = noEvent;
         this.visitDay = visitDay;
         this.badge = badge;
-        this.totalAmountBeforeDiscount = totalAmountBeforeDiscount;
-        this.totalDiscountAmount = totalDiscountAmount;
-        this.totalEventAmount = totalEventAmount;
+        this.payment = new Payment(totalAmountBeforeDiscount, totalDiscountAmount, totalEventAmount);
     }
 
     public Client(Integer visitDay, MenuOrders menuOrders) {
-        this(null, menuOrders.getId(),true,visitDay,DecemberBadge.NONE,menuOrders.getTotalAmountBeforeDiscount(), 0, 0);
+        this(null, menuOrders.getId(), true, visitDay, DecemberBadge.NONE, menuOrders.getTotalAmountBeforeDiscount(), 0,
+                0);
     }
+
     public Client(Client client) {
-        this(null,client.menuOrdersId,client.noEvent,client.getVisitDay(),client.badge,client.totalAmountBeforeDiscount,client.totalDiscountAmount,client.totalEventAmount);
+        this(null, client.menuOrdersId, client.noEvent, client.getVisitDay(), client.badge,
+                client.payment.getTotalPaymentBeforeDiscount(), client.payment.getTotalDiscountMoney(),
+                client.payment.getTotalEventBenefitMoney());
     }
-    public Client(Long id,Client client){
-        this(id, client.menuOrdersId,client.noEvent,client.getVisitDay(),client.badge,client.totalAmountBeforeDiscount,client.totalDiscountAmount,client.totalEventAmount);
+
+    public Client(Long id, Client client) {
+        this(id, client.menuOrdersId, client.noEvent, client.getVisitDay(), client.badge,
+                client.payment.getTotalPaymentBeforeDiscount(), client.payment.getTotalDiscountMoney(),
+                client.payment.getTotalEventBenefitMoney());
     }
-    public Long getId(){
+
+    public Long getId() {
         return id;
     }
+
     public Integer getVisitDay() {
         return visitDay;
-    }
-    public Integer getTotalAmountBeforeDiscount() {
-        return totalAmountBeforeDiscount;
-    }
-
-    public Integer getTotalDiscountAmount() {
-        return totalDiscountAmount;
-    }
-
-    public Integer getAfterDiscount() {
-        return totalAmountBeforeDiscount - totalDiscountAmount;
     }
 
     public String getBadgeContent() {
@@ -57,26 +51,35 @@ public class Client {
     }
 
     public void applyBadge() {
-        this.badge = badge.updateBadge(totalEventAmount);
+        this.badge = badge.updateBadge(payment.getTotalEventBenefitMoney());
     }
 
     public void joinEvent() {
         this.noEvent = false;
     }
 
-    public void addBenefitToTotalDiscountAmount(Integer eventBenefit) {
-        totalDiscountAmount += eventBenefit;
-    }
-
-    public void addBenefitToTotalEventAmount(int amount) {
-        this.totalEventAmount += amount;
-    }
-
-    public boolean isNotJoinEvent() {
-        return this.noEvent;
-    }
-
     public Long getMenuOrdersId() {
         return menuOrdersId;
+    }
+
+    public void addBenefitToTotalDiscountAndEventBenefit(int benefit) {
+        payment.addBenefitToTotalDiscountAndEventBenefit(benefit);
+    }
+
+    public void addBenefitToTotalEventAmount(int benefit) {
+        payment.addBenefitToTotalEventAmount(benefit);
+    }
+
+    public Boolean checkCanGetEvent(int minMoneyValue) {
+        return payment.checkCanGetEvent(minMoneyValue);
+    }
+
+    public Boolean canGetEventByCheckDDay(Integer dDayBaseDay) {
+        boolean re  = visitDay <= dDayBaseDay;
+        return  re;
+    }
+
+    public Payment getPayment() {
+        return payment;
     }
 }

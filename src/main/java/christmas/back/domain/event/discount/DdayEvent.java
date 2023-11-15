@@ -8,17 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DdayEvent extends BaseEvent {
-    private final Integer day = 25;
+    private static final Integer D_DAY_BASE_MONEY = 1000;
+    private static final Integer D_DAY_BASE_DAY = 25;
     @Override
     public Boolean canGetEvent(Client client , MenuOrders menuOrders) {
-        if(client.getVisitDay() <= day) {
-            return true;
-        }
-        return false;
+        return client.canGetEventByCheckDDay(D_DAY_BASE_DAY);
     }
     @Override
     public Map<EventType,Integer> getEventBenefit(Client client,MenuOrders menuOrders) {
-        int amount = 1000 + (client.getVisitDay() - 1) * 100;
+        int amount = eventBenefitCalculate(client.getVisitDay());
         Map<EventType, Integer> benefitMap = new HashMap<>();
         benefitMap.put(EventType.DDayEvent, amount);
         return benefitMap;
@@ -26,8 +24,10 @@ public class DdayEvent extends BaseEvent {
     @Override
     public void updateClientBenefit(Client client,MenuOrders menuOrders) {
         client.joinEvent();
-        int amount = 1000 + (client.getVisitDay() - 1) * 100;
-        client.addBenefitToTotalDiscountAmount(amount);
-        client.addBenefitToTotalEventAmount(amount);
+        int benefit = eventBenefitCalculate(client.getVisitDay());
+        client. addBenefitToTotalDiscountAndEventBenefit(benefit);
+    }
+    public Integer eventBenefitCalculate(Integer givenDay){
+        return D_DAY_BASE_MONEY + (givenDay - 1) * 100;
     }
 }
