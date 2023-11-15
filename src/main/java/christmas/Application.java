@@ -1,9 +1,9 @@
 package christmas;
 
-import christmas.controller.IOController;
-import christmas.controller.PlannerController;
-import christmas.view.InputView;
-import christmas.view.OutputView;
+import christmas.front.controller.IOController;
+import christmas.back.controller.PlannerController;
+import christmas.front.view.InputView;
+import christmas.front.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
