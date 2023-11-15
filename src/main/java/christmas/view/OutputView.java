@@ -50,18 +50,13 @@ public class OutputView {
     public void showDelimeterLineInPlanner() {
         System.out.println("");
     }
-
-    private void showNoEventResult() {
-        System.out.println("없음");
-    }
-
     public void showEventItemsHeaderMessage() {
         System.out.println("<혜택 내역>");
     }
-
-    public void showNoResultMessage() {
+    public void showNoEventResult() {
         System.out.println("없음");
     }
+
     private String getForMatedNumber(Integer given) {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         return decimalFormat.format(given);

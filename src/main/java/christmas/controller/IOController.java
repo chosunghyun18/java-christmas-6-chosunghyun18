@@ -89,6 +89,6 @@ public class IOController {
     }
 
     public void showNoBenefit() {
-        outputView.showNoResultMessage();
+        outputView.showNoEventResult();
     }
 }
