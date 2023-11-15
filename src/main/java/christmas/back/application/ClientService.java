@@ -11,8 +11,8 @@ public class ClientService {
     public ClientService() {
         this.clientRepository = new ClientRepositoryImpl();
     }
-    public void saveClient(Integer visitDay , MenuOrders menuOrders) {
-        Client client = new Client(visitDay,menuOrders);
-        client = clientRepository.save(client);
+    public void saveClient(Client clientInfo) {
+        Client client = new Client(clientInfo.getVisitDay(), clientInfo.getMenuOrders());
+        clientRepository.save(client);
     }
 }

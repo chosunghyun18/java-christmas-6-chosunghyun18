@@ -1,5 +1,6 @@
 package christmas.back.controller;
 
+import christmas.back.application.ClientService;
 import christmas.back.domain.event.config.BaseEvent;
 import christmas.back.domain.event.config.EventConfig;
 import christmas.back.domain.event.gift.GiftEvent;
@@ -12,11 +13,13 @@ public class PlannerController {
     private final IOController ioController;
     private final Client client;
     private final List<BaseEvent> events;
+    private final ClientService clientService;
 
     public PlannerController(IOController ioController) {
         this.events = EventConfig.configEvent();
         this.ioController = ioController;
         this.client = new Client(ioController.getVisitDay(),ioController.readMenuAndAmount());
+        this.clientService = new ClientService();
     }
 
     public void startPlanner() {
@@ -68,5 +71,10 @@ public class PlannerController {
         showTotalDiscount();
         showAfterDiscount();
         showBadge();
+        clientService.saveClient(client);
+    }
+
+    public void  saveResults() {
+        clientService.saveClient(client);
     }
 }
