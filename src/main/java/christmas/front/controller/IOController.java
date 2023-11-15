@@ -4,6 +4,7 @@ import christmas.back.domain.event.config.EventType;
 import christmas.back.domain.order.MenuOrders;
 import christmas.front.view.InputView;
 import christmas.front.view.OutputView;
+import java.util.List;
 import java.util.Map;
 
 public class IOController {
@@ -81,7 +82,14 @@ public class IOController {
         outputView.showDelimeterLineInPlanner();
     }
 
-    public void showBenefit(Map<EventType,Integer> benefit) {
+    public void showBenefit(List<Map<EventType,Integer>> benefit) {
+        if(benefit.isEmpty()) {
+            showNoBenefit();
+        return;
+        }
+        benefit.forEach(this::showSingleBenefit);
+    }
+    private void showSingleBenefit(Map<EventType,Integer> benefit){
         Map.Entry<EventType, Integer> entry = benefit.entrySet().iterator().next();
         EventType benefitType = entry.getKey();
         Integer benefitAmount = entry.getValue();

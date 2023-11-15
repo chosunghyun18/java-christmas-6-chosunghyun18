@@ -7,13 +7,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-
 public class MenuOrders {
+    private final Long id;
     private final Map<MenuItem, Integer> orders;
 
-    public MenuOrders(Map<MenuItem, Integer> orders) {
+    private MenuOrders(Long id, Map<MenuItem, Integer> orders) {
         OrderValidate.checkOrders(orders);
-        this.orders = new TreeMap<>(orders);
+        this.id = id;
+        this.orders = orders;
+    }
+
+    public MenuOrders(Map<MenuItem, Integer> orders) {
+        this(null, new TreeMap<>(orders));
+    }
+
+    public MenuOrders(Long id, MenuOrders menuOrders) {
+        this(id, menuOrders.orders);
     }
 
     public List<Map<String, Integer>> getOrderForMessage() {
@@ -43,10 +52,15 @@ public class MenuOrders {
                 .mapToInt(Map.Entry::getValue)
                 .sum();
     }
+
     public Boolean canNotGetEvent() {
         int totalPrice = orders.entrySet().stream()
                 .mapToInt(entry -> entry.getKey().getItemPrice() * entry.getValue())
                 .sum();
         return totalPrice < 10000;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

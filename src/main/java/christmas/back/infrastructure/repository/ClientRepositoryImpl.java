@@ -7,8 +7,7 @@ import christmas.back.infrastructure.db.InMemoryClientRepository;
 public class ClientRepositoryImpl implements ClientRepository {
     @Override
     public Client save(Client client) {
-        InMemoryClientRepository.save(client);
-        return null;
+        return InMemoryClientRepository.save(client);
     }
 
     @Override

@@ -11,9 +11,8 @@ public class InMemoryClientRepository {
     public static Client save(Client client) {
         Long usersSize = (long) database.size();
         Long autoIncreaseId = usersSize + 1;
-        client = new Client(autoIncreaseId, client);
+        client = new Client(autoIncreaseId,client);
         database.put(client.getId(), client);
-        System.out.println(client);
         return client;
     }
 

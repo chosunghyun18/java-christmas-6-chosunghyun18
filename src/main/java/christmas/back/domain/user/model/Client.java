@@ -4,37 +4,35 @@ import christmas.back.domain.event.gift.DecemberBadge;
 import christmas.back.domain.order.MenuOrders;
 
 public class Client {
-    private Long id;
+    private final Long id;
+    private final Long menuOrdersId;
     private Boolean noEvent;
-    private Integer visitDay;
-    private MenuOrders menuOrders;
+    private final Integer visitDay;
     private DecemberBadge badge;
-    private Integer totalAmountBeforeDiscount;
+    private final Integer totalAmountBeforeDiscount;
     private Integer totalDiscountAmount;
     private Integer totalEventAmount;
 
-    private Client(Long id, Integer visitDay, MenuOrders menuOrders, Integer totalAmountBeforeDiscount, Boolean noEvent,
-                   Integer totalDiscountAmount, Integer totalEventAmount, DecemberBadge badge) {
+    private Client(Long id, Long menuOrdersId, Boolean noEvent, Integer visitDay, DecemberBadge badge,
+                  Integer totalAmountBeforeDiscount, Integer totalDiscountAmount, Integer totalEventAmount) {
         this.id = id;
-        this.visitDay = visitDay;
-        this.menuOrders = menuOrders;
-        this.totalAmountBeforeDiscount = totalAmountBeforeDiscount;
+        this.menuOrdersId = menuOrdersId;
         this.noEvent = noEvent;
+        this.visitDay = visitDay;
+        this.badge = badge;
+        this.totalAmountBeforeDiscount = totalAmountBeforeDiscount;
         this.totalDiscountAmount = totalDiscountAmount;
         this.totalEventAmount = totalEventAmount;
-        this.badge = badge;
     }
 
     public Client(Integer visitDay, MenuOrders menuOrders) {
-        this(null, visitDay, menuOrders, menuOrders.getTotalAmountBeforeDiscount(), true, 0, 0,DecemberBadge.NONE);
+        this(null, menuOrders.getId(),true,visitDay,DecemberBadge.NONE,menuOrders.getTotalAmountBeforeDiscount(), 0, 0);
     }
-    public Client(Long id , Integer visitDay, MenuOrders menuOrders) {
-        this(id, visitDay, menuOrders, menuOrders.getTotalAmountBeforeDiscount(), true, 0, 0,DecemberBadge.NONE);
+    public Client(Client client) {
+        this(null,client.menuOrdersId,client.noEvent,client.getVisitDay(),client.badge,client.totalAmountBeforeDiscount,client.totalDiscountAmount,client.totalEventAmount);
     }
-
-    public Client(Long id, Client client) {
-        this(id, client.visitDay, client.menuOrders, client.totalAmountBeforeDiscount, client.noEvent,
-                client.totalDiscountAmount, client.totalEventAmount, client.badge);
+    public Client(Long id,Client client){
+        this(id, client.menuOrdersId,client.noEvent,client.getVisitDay(),client.badge,client.totalAmountBeforeDiscount,client.totalDiscountAmount,client.totalEventAmount);
     }
     public Long getId(){
         return id;
@@ -42,11 +40,6 @@ public class Client {
     public Integer getVisitDay() {
         return visitDay;
     }
-
-    public MenuOrders getMenuOrders() {
-        return menuOrders;
-    }
-
     public Integer getTotalAmountBeforeDiscount() {
         return totalAmountBeforeDiscount;
     }
@@ -81,5 +74,9 @@ public class Client {
 
     public boolean isNotJoinEvent() {
         return this.noEvent;
+    }
+
+    public Long getMenuOrdersId() {
+        return menuOrdersId;
     }
 }

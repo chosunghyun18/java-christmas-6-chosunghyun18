@@ -1,38 +1,40 @@
 package christmas.back.controller;
 
-import christmas.back.application.ClientService;
-import christmas.back.domain.event.config.BaseEvent;
-import christmas.back.domain.event.config.EventConfig;
-import christmas.back.domain.event.gift.GiftEvent;
-import christmas.back.domain.user.model.Client;
-
+import christmas.back.application.service.ClientService;
+import christmas.back.application.service.MenuOrderService;
+import christmas.back.application.usecase.CheckEventAndUpdateClientPayment;
+import christmas.back.application.usecase.SaveClientVisitDayAndOrders;
 import christmas.front.controller.IOController;
-import java.util.List;
 
 public class PlannerController {
     private final IOController ioController;
-    private final Client client;
-    private final List<BaseEvent> events;
+    private Long clientId;
+    private final SaveClientVisitDayAndOrders saveClientVisitDayAndOrders;
+    private final CheckEventAndUpdateClientPayment checkEventAndUpdateClientPayment;
     private final ClientService clientService;
 
-    public PlannerController(IOController ioController) {
-        this.events = EventConfig.configEvent();
+    public PlannerController(IOController ioController, ClientService clientService,
+                             MenuOrderService menuOrderService) {
         this.ioController = ioController;
-        this.client = new Client(ioController.getVisitDay(),ioController.readMenuAndAmount());
-        this.clientService = new ClientService();
+        this.clientService = clientService;
+        this.saveClientVisitDayAndOrders = new SaveClientVisitDayAndOrders(clientService, menuOrderService);
+        this.checkEventAndUpdateClientPayment = new CheckEventAndUpdateClientPayment(clientService, menuOrderService);
     }
 
     public void startPlanner() {
-        ioController.showEventDayIntroMessage(client.getVisitDay());
-        ioController.showOrderCompleteMessage(client.getMenuOrders());
+        var visitDay = ioController.getVisitDay();
+        var menuOrders = ioController.readMenuAndAmount();
+        this.clientId = saveClientVisitDayAndOrders.execute(visitDay, menuOrders);
+        ioController.showEventDayIntroMessage(visitDay);
+        ioController.showOrderCompleteMessage(menuOrders);
     }
 
     public void showBeforeDisCount() {
-        ioController.showBeforeDisCountMessage(client.getTotalAmountBeforeDiscount());
+        ioController.showBeforeDisCountMessage(clientService.getTotalAmountBeforeDiscount(clientId));
     }
 
     public void showGiftEventMenu() {
-        ioController.showExtraItemEventMessage(GiftEvent.getGiftMenu(client));
+        ioController.showExtraItemEventMessage(clientService.getGiftEventMenu(clientId));
     }
 
     public void showEventItemsResult() {
@@ -42,28 +44,23 @@ public class PlannerController {
     }
 
     public void showTotalDiscount() {
-        ioController.showTotalDiscountMessage(client.getTotalDiscountAmount());
+        ioController.showTotalDiscountMessage(clientService.getTotalDiscountAmount(clientId));
     }
 
     public void showAfterDiscount() {
-        ioController.showAfterDiscount(client.getAfterDiscount());
+        ioController.showAfterDiscount(clientService.getAfterDiscount(clientId));
     }
 
     public void showBadge() {
-        client.applyBadge();
-        ioController.showEventBadge(client.getBadgeContent());
+        clientService.updateBadge(clientId);
+        ioController.showEventBadge(clientService.getBadgeContent(clientId));
     }
+
     private void checkEvent() {
-        events.forEach(event ->{
-            if(event.canGetEvent(client)){
-                ioController.showBenefit(event.getEventBenefit(client));
-                event.updateClientBenefit(client);
-            }
-        });
-        if(client.isNotJoinEvent()){
-            ioController.showNoBenefit();
-        }
+        var result = checkEventAndUpdateClientPayment.execute(clientId);
+        ioController.showBenefit(result);
     }
+
     public void showOrderResult() {
         showBeforeDisCount();
         showGiftEventMenu();
@@ -71,10 +68,5 @@ public class PlannerController {
         showTotalDiscount();
         showAfterDiscount();
         showBadge();
-        clientService.saveClient(client);
-    }
-
-    public void  saveResults() {
-        clientService.saveClient(client);
     }
 }
