@@ -33,3 +33,9 @@ out/
 
 ### Mac OS ###
 .DS_Store
+*.DS_Store
+~/*.DS_Store
+
+# Compiled class file
+*.class
+*.log
